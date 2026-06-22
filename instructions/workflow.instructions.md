@@ -5,6 +5,8 @@ description: "Use when: 用户说'添加规则'、'添加记忆'、'推送'、'c
 
 当用户说特定关键词时，按以下流程执行：
 
+> ⚠️ 所有 git 操作都在 `~/.vscode-server/data/User/prompts` 目录下执行（即 ai-knowledge 仓库）。
+
 ## 添加规则
 
 触发词：`添加规则`、`创建规则`、`新增规则`、`add rule`
@@ -27,8 +29,12 @@ applyTo: [<文件匹配模式>]
 - <规则条目2>
 ```
 
-4. 创建完成后执行 `git add` 和 `git commit`
-5. 告知用户，等待用户说"推送"后执行 `git push`
+4. 创建完成后，自动执行 git 提交和推送（无需等待用户说"推送"）：
+   - `cd ~/.vscode-server/data/User/prompts`
+   - `git add -A`
+   - `git commit -m "<规则名>"`
+   - `git push`
+5. 告知用户已自动完成全部操作
 
 ## 添加记忆
 
@@ -49,13 +55,18 @@ date: <当前日期>
 ...
 ```
 
-4. 创建完成后执行 `git add` 和 `git commit`
-5. 告知用户，等待推送指令
+4. 创建完成后，自动执行 git 提交和推送（无需等待用户说"推送"）：
+   - `cd ~/.vscode-server/data/User/prompts`
+   - `git add -A`
+   - `git commit -m "记忆: <标题>"`
+   - `git push`
+5. 告知用户已自动完成全部操作
 
 ## 推送
 
 触发词：`推送`、`push`、`commit并push`
 
-1. 检查当前是否有未提交的更改：`git status`
-2. 如有未暂存文件，先 `git add -A && git commit -m "<描述>"`
-3. 执行 `git push`
+1. 切换到仓库目录：`cd ~/.vscode-server/data/User/prompts`
+2. 检查当前是否有未提交的更改：`git status`
+3. 如有未暂存文件，先 `git add -A && git commit -m "<描述>"`
+4. 执行 `git push`
